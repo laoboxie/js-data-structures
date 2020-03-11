@@ -43,22 +43,21 @@ class Heap {
 
   // 比较函数
   defaultCompare(a, b) {
-    return a <= b;
+    return a > b;
   }
 
   // 交换元素
   swap(a, b) {
     // console.log(a, b, this.data[a], this.data[b])
     let temp = this.data[a];
-    this.data[a] = this.data[b]
-    this.data[b] = temp
+    this.data[a] = this.data[b];
+    this.data[b] = temp;
   }
 
   // 元素上浮
   float(i) {
-    let p = parseInt(i / 2);
-    while (i > 1 && this.compare(this.data[i], this.data[p])) {
-      this.swap(i, p);
+    while (i > 1 && this.compare(this.data[i], this.data[parseInt(i / 2)])) {
+      this.swap(i, parseInt(i / 2));
       i = parseInt(i / 2);
     }
   }
@@ -95,22 +94,23 @@ class Heap {
 
 function test() {
   let heap = new Heap();
-  let arr = []
-  let str = ""
-  for (let i = 0; i < 10; i++) {
+  let arr = [];
+  let str = "";
+  for (let i = 0; i < 20; i++) {
     let rand = parseInt(Math.random() * 100);
     arr.push(rand);
     str += rand + " -> ";
-    heap.push(rand)
+    heap.push(rand);
     heap.print();
   }
-  console.log(str)
+  console.log(str);
 
-  let res = []
-  while(!heap.isEmpty()){
-    res.push(heap.pop())
+  let res = [];
+  while (!heap.isEmpty()) {
+    res.push(heap.pop());
   }
-  console.log(res)
+  console.log(res);
+  console.log(res.sort((a,b)=>{return b-a}))
 }
 
 test();
