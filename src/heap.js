@@ -41,9 +41,9 @@ class Heap {
     return this.data[1];
   }
 
-  // 比较函数
+  // 比较函数 默认最小堆
   defaultCompare(a, b) {
-    return a > b;
+    return a - b;
   }
 
   // 交换元素
@@ -56,7 +56,10 @@ class Heap {
 
   // 元素上浮
   float(i) {
-    while (i > 1 && this.compare(this.data[i], this.data[parseInt(i / 2)])) {
+    while (
+      i > 1 &&
+      this.compare(this.data[i], this.data[parseInt(i / 2)]) < 0
+    ) {
       this.swap(i, parseInt(i / 2));
       i = parseInt(i / 2);
     }
@@ -68,11 +71,11 @@ class Heap {
       let c = 2 * i;
       if (
         c + 1 <= this.count &&
-        !this.compare(this.data[c], this.data[c + 1])
+        this.compare(this.data[c], this.data[c + 1]) > 0
       ) {
         c++;
       }
-      if (!this.compare(this.data[i], this.data[c])) {
+      if (this.compare(this.data[i], this.data[c]) > 0) {
         this.swap(i, c);
         i = c;
       } else {
@@ -92,25 +95,4 @@ class Heap {
   }
 }
 
-function test() {
-  let heap = new Heap();
-  let arr = [];
-  let str = "";
-  for (let i = 0; i < 20; i++) {
-    let rand = parseInt(Math.random() * 100);
-    arr.push(rand);
-    str += rand + " -> ";
-    heap.push(rand);
-    heap.print();
-  }
-  console.log(str);
-
-  let res = [];
-  while (!heap.isEmpty()) {
-    res.push(heap.pop());
-  }
-  console.log(res);
-  console.log(res.sort((a,b)=>{return b-a}))
-}
-
-test();
+module.exports = Heap;
